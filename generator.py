@@ -6,19 +6,29 @@ from langchain_openai import ChatOpenAI
 PROFIL = ("openai")
 CHAT_MODEL = "gpt-4o"
 
+SECTION_1 = "Czy treść pracy odpowiada tematowi określonemu w tytule"
+SECTION_2 = "Ocena układu pracy (struktury, podziału, treści, kolejności rozdziałów, kompletnności tez itp.)"
+SECTION_3 = "Merytoryczna ocena pracy"
+SECTION_4 = "Czy, a jeśli tak, to w jakim zakresie praca stanowi nowe użycie problemu"
+SECTION_5 = "Charakterystyka doboru i wykorzystania źródeł"
+SECTION_6 = "Ocena formalnej strony pracy (poprawność językowa, opanowanie techniki pisania pracy, spis rzeczy, odsyłacze)"
+SECTION_7 = "Ocena osiągniętych efektów uczenia maszynowego (patrz karta zajęć)"
+SECTIONS = [SECTION_1, SECTION_2, SECTION_3, SECTION_4, SECTION_5, SECTION_6, SECTION_7]
+
 PROMPT_TEMPLATE = """
 DOKUMENT:
 {context}
 PYTANIA:
-Czy treść pracy odpowiada tematowi określonemu w tytule?
-Ocena układu pracy (struktury, podziału, treści, kolejności rozdziałów, kompletności tez itp.)
-Merytoryczna ocena pracy
-Czy, a jeśli tak, to w jakim zakresie praca stanowi nowe ujęcie problemu?
-Charakterystyka doboru i wykorzystania źródeł
-Ocena formalnej strony pracy (poprawność językowa, opanowanie techniki pisania pracy, spis rzeczy, odsyłacze) 
-Ocena osiągniętych efektów uczenia się (patrz karta zajęć)
+1. {sections[0]}
+2. {sections[1]}
+3. {sections[2]}
+4. {sections[3]}
+5. {sections[4]}
+6. {sections[5]}
+7. {sections[6]}
 INSTRUKCJA:
 Jako promotor pracy dyplomowej stwórz recenzję odpowiadając na powyższe PYTANIA.
+Odpowiedź przedstaw w formacie JSON gdzie kluczami są numery nagłówków.
 """
 
 
@@ -36,7 +46,7 @@ def load_docx(file_path: str) -> list[Document]:
 
 def generate(context_text: str, openai_api_key: str, base_url: str) -> str:
     prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
-    prompt = prompt_template.format(context=context_text)
+    prompt = prompt_template.format(context=context_text, sections=SECTIONS)
     # print(prompt)
     model = ChatOpenAI(openai_api_key=openai_api_key, base_url=base_url, model=CHAT_MODEL)
     response_text = model.invoke(prompt)

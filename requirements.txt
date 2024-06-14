@@ -3,3 +3,4 @@ langchain==0.2.1
 langchain-openai==0.1.7
 langchain-community==0.2.1
 docx2txt==0.8
+st-copy-to-clipboard==0.1.6
