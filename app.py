@@ -13,13 +13,15 @@ SECRETS_FILE = "secrets.toml"
 if os.path.exists(SECRETS_FILE):
     OPENAI_API_KEY = st.secrets["openai"]["OPENAI_API_KEY"]
     OPENAI_BASE_URL = st.secrets["openai"]["OPENAI_BASE_URL"]
+    PIN_CODE = st.secrets["PIN_CODE"]
 else:
     OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
     OPENAI_BASE_URL = os.environ.get("OPENAI_BASE_URL")
+    PIN_CODE = os.environ.get("PIN_CODE")
 
 os.makedirs(TMP_DIR, exist_ok=True)
 
-auth.key()
+auth.key(PIN_CODE)
 
 st.header("Generator recenzji")
 
