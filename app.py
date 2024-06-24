@@ -8,8 +8,14 @@ import auth
 
 TMP_DIR = "tmp/"
 FILE_TYPES = ["docx"]
-OPENAI_API_KEY = st.secrets["openai"]["OPENAI_API_KEY"]
-OPENAI_BASE_URL = st.secrets["openai"]["OPENAI_BASE_URL"]
+SECRETS_FILE = "secrets.toml"
+
+if os.path.exists(SECRETS_FILE):
+    OPENAI_API_KEY = st.secrets["openai"]["OPENAI_API_KEY"]
+    OPENAI_BASE_URL = st.secrets["openai"]["OPENAI_BASE_URL"]
+else:
+    OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+    OPENAI_BASE_URL = os.environ.get("OPENAI_BASE_URL")
 
 os.makedirs(TMP_DIR, exist_ok=True)
 
