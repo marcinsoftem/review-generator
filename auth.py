@@ -8,5 +8,5 @@ def key(key : str):
                 if st.session_state["auth_key"] != key:
                     st.warning("Kod jest nieprawidłowy")
                 else:
-                    st.experimental_rerun()
+                    st.rerun()
             st.stop()

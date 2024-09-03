@@ -15,8 +15,7 @@ SECTION_6 = "Ocena formalnej strony pracy (poprawność językowa, opanowanie te
 SECTION_7 = "Ocena osiągniętych efektów uczenia maszynowego (patrz karta zajęć)"
 SECTIONS = [SECTION_1, SECTION_2, SECTION_3, SECTION_4, SECTION_5, SECTION_6, SECTION_7]
 
-PROMPT_TEMPLATE = """
-DOKUMENT:
+PROMPT_TEMPLATE = """DOKUMENT:
 {context}
 PYTANIA:
 1. {sections[0]}
@@ -28,8 +27,7 @@ PYTANIA:
 7. {sections[6]}
 INSTRUKCJA:
 Jako promotor pracy dyplomowej stwórz recenzję odpowiadając na powyższe PYTANIA.
-Odpowiedź przedstaw w formacie JSON gdzie kluczami są numery nagłówków.
-"""
+Odpowiedź przedstaw w formacie JSON gdzie kluczami są numery nagłówków."""
 
 
 def clean_documents(pages: list[Document]) -> list[Document]:
@@ -42,12 +40,11 @@ def clean_documents(pages: list[Document]) -> list[Document]:
 
 def load_docx(file_path: str) -> list[Document]:
     return Docx2txtLoader(file_path).load()
+def prepare_prompt(context_text: str, prompt_template: str) -> str:
+    chat_prompt_template = ChatPromptTemplate.from_template(prompt_template)
+    return chat_prompt_template.format(context=context_text, sections=SECTIONS)
 
-
-def generate(context_text: str, openai_api_key: str, base_url: str) -> str:
-    prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
-    prompt = prompt_template.format(context=context_text, sections=SECTIONS)
-    # print(prompt)
+def generate(prompt: str, openai_api_key: str, base_url: str) -> str:
     model = ChatOpenAI(openai_api_key=openai_api_key, base_url=base_url, model=CHAT_MODEL)
     response_text = model.invoke(prompt)
     return response_text
