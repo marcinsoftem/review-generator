@@ -9,10 +9,10 @@ CHAT_MODEL = "gpt-4o"
 SECTION_1 = "Czy treść pracy odpowiada tematowi określonemu w tytule"
 SECTION_2 = "Ocena układu pracy (struktury, podziału, treści, kolejności rozdziałów, kompletnności tez itp.)"
 SECTION_3 = "Merytoryczna ocena pracy"
-SECTION_4 = "Czy, a jeśli tak, to w jakim zakresie praca stanowi nowe użycie problemu"
+SECTION_4 = "Czy, a jeśli tak, to w jakim zakresie praca stanowi nowe ujęcie problemu"
 SECTION_5 = "Charakterystyka doboru i wykorzystania źródeł"
 SECTION_6 = "Ocena formalnej strony pracy (poprawność językowa, opanowanie techniki pisania pracy, spis rzeczy, odsyłacze)"
-SECTION_7 = "Ocena osiągniętych efektów uczenia maszynowego (patrz karta zajęć)"
+SECTION_7 = "Ocena osiągniętych efektów uczenia się (patrz karta zajęć)"
 SECTIONS = [SECTION_1, SECTION_2, SECTION_3, SECTION_4, SECTION_5, SECTION_6, SECTION_7]
 
 PROMPT_TEMPLATE = """DOKUMENT:
